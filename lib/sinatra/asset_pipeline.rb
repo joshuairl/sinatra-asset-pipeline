@@ -18,8 +18,10 @@ module Sinatra
       app.set :static_cache_control, [:public, :max_age => 525600]
 
       app.configure do
-        Dir[File.join app.assets_prefix, "*"].each {|path| app.sprockets.append_path path}
-
+        ['stylesheets', 'javascripts', 'images'].each do |dir|
+          app.sprockets.append_path(File.join('app','assets', dir))
+          app.sprockets.append_path(File.join('vendor','assets', dir))
+        end
         Sprockets::Helpers.configure do |config|
           config.environment = app.sprockets
           config.digest = app.assets_digest
