@@ -18,6 +18,7 @@ module Sinatra
       app.set :static_cache_control, [:public, :max_age => 525600]
 
       app.configure do
+        puts "config starting"
         ['stylesheets', 'javascripts', 'images'].each do |dir|
           app.sprockets.append_path(File.join('app','assets', dir))
           app.sprockets.append_path(File.join('vendor','assets', dir))
@@ -29,12 +30,14 @@ module Sinatra
       end
 
       app.configure :staging, :production do
+        puts "config staging / production"
         Sprockets::Helpers.configure do |config|
           config.manifest = Sprockets::Manifest.new(app.sprockets, app.assets_path)
         end
       end
 
       app.configure :production do
+        puts "config production"
         app.sprockets.css_compressor = app.assets_css_compressor unless app.assets_css_compressor == :none
         app.sprockets.js_compressor = app.assets_js_compressor unless app.assets_js_compressor == :none
 
@@ -47,6 +50,7 @@ module Sinatra
       app.helpers Sprockets::Helpers
 
       app.configure :development do
+        puts "config development"
         app.get '/assets/*' do |key|
           key.gsub! /(-\w+)(?!.*-\w+)/, ""
           asset = app.sprockets[key]
