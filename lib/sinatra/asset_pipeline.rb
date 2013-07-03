@@ -1,6 +1,7 @@
 require 'sprockets'
 require 'sprockets-sass'
 require 'sprockets-helpers'
+require 'active_support'
 
 module Sinatra
   module AssetPipeline
@@ -23,9 +24,12 @@ module Sinatra
           app.sprockets.append_path(File.join('app','assets', dir))
           app.sprockets.append_path(File.join('vendor','assets', dir))
         end
+        
+        app.sprockets.cache = ActiveSupport::Cache::FileStore.new("tmp/cache/assets")
+        
         Sprockets::Helpers.configure do |config|
           config.environment = app.sprockets
-          config.digest = app.assets_digest
+          #config.digest = app.assets_digest
         end
       end
 
@@ -33,6 +37,7 @@ module Sinatra
         puts "config staging / production"
         Sprockets::Helpers.configure do |config|
           config.manifest = Sprockets::Manifest.new(app.sprockets, app.assets_path)
+          #config.digest = app.assets_digest
         end
       end
 
