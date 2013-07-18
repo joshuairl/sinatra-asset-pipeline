@@ -25,11 +25,10 @@ module Sinatra
           app.sprockets.append_path(File.join('vendor','assets', dir))
         end
         
-        app.sprockets.cache = ActiveSupport::Cache::FileStore.new("tmp/cache/assets")
         
         Sprockets::Helpers.configure do |config|
           config.environment = app.sprockets
-          #config.assets_prefix = app.assets_prefix
+          config.prefix = app.assets_prefix
           config.digest = app.assets_digest
         end
       end
@@ -56,6 +55,8 @@ module Sinatra
       app.helpers Sprockets::Helpers
 
       app.configure :development do
+        app.sprockets.cache = ActiveSupport::Cache::FileStore.new("tmp/cache/assets")
+        
         puts "config development"
         app.get '/assets/*' do |key|
           key.gsub! /(-\w+)(?!.*-\w+)/, ""
