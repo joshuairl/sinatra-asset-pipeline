@@ -29,7 +29,7 @@ module Sinatra
         
         Sprockets::Helpers.configure do |config|
           config.environment = app.sprockets
-          #config.digest = app.assets_digest
+          config.digest = app.assets_digest
         end
       end
 
@@ -37,7 +37,7 @@ module Sinatra
         puts "config staging / production"
         Sprockets::Helpers.configure do |config|
           config.manifest = Sprockets::Manifest.new(app.sprockets, app.assets_path)
-          #config.digest = app.assets_digest
+          config.digest = app.assets_digest
         end
       end
 
