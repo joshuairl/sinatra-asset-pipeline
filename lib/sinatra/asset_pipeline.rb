@@ -29,7 +29,7 @@ module Sinatra
         
         Sprockets::Helpers.configure do |config|
           config.environment = app.sprockets
-          config.assets_prefix = app.assets_prefix
+          #config.assets_prefix = app.assets_prefix
           config.digest = app.assets_digest
         end
       end
