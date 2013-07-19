@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'rake'
   gem.add_dependency 'sinatra'
   gem.add_dependency 'sass'
+  gem.add_dependency 'haml_coffee_assets'
   gem.add_dependency 'active_support'
   gem.add_dependency 'coffee-script'
   gem.add_dependency 'sprockets'

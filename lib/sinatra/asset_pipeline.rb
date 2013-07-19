@@ -1,6 +1,7 @@
 require 'sprockets'
 require 'sprockets-sass'
 require 'sprockets-helpers'
+require 'haml_coffee_assets'
 require 'active_support'
 
 module Sinatra
@@ -25,11 +26,15 @@ module Sinatra
           app.sprockets.append_path(File.join('vendor','assets', dir))
         end
         
+        app.sprockets.append_path File.dirname(HamlCoffeeAssets.helpers_path)
         
         Sprockets::Helpers.configure do |config|
           config.environment = app.sprockets
           config.prefix = app.assets_prefix
           config.digest = app.assets_digest
+          config.debug       = true if :development?
+
+          puts "config.debug = #{config.debug}"
         end
       end
 
@@ -57,6 +62,7 @@ module Sinatra
       app.configure :development do
         app.sprockets.cache = ActiveSupport::Cache::FileStore.new("tmp/cache/assets")
         
+
         puts "config development"
         app.get '/assets/*' do |key|
           key.gsub! /(-\w+)(?!.*-\w+)/, ""
