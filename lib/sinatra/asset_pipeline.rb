@@ -20,7 +20,7 @@ module Sinatra
 
       app.configure do
         puts "config starting"
-        ['stylesheets', 'javascripts', 'images', 'fonts'].each do |dir|
+        ['stylesheets', 'javascripts', 'images', 'fonts', 'templates'].each do |dir|
           app.sprockets.append_path(File.join('app','assets', dir))
           app.sprockets.append_path(File.join('vendor','assets', dir))
         end
