@@ -58,12 +58,15 @@ module Sinatra
       app.helpers Sprockets::Helpers
 
       app.configure :development do
-        config.debug       = true
-        puts "config.debug = #{config.debug}"
         app.sprockets.cache = ActiveSupport::Cache::FileStore.new("tmp/cache/assets")
         
+        Sprockets::Helpers.configure do |config|
+          config.debug       = true
+          puts "config.debug = #{config.debug}"
+        end
 
         puts "config development"
+        
         app.get '/assets/*' do |key|
           key.gsub! /(-\w+)(?!.*-\w+)/, ""
           asset = app.sprockets[key]
