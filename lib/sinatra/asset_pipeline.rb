@@ -32,9 +32,7 @@ module Sinatra
           config.environment = app.sprockets
           config.prefix = app.assets_prefix
           config.digest = app.assets_digest
-          config.debug       = true if :development?
-
-          puts "config.debug = #{config.debug}"
+          
         end
       end
 
@@ -60,6 +58,8 @@ module Sinatra
       app.helpers Sprockets::Helpers
 
       app.configure :development do
+        config.debug       = true
+        puts "config.debug = #{config.debug}"
         app.sprockets.cache = ActiveSupport::Cache::FileStore.new("tmp/cache/assets")
         
 
