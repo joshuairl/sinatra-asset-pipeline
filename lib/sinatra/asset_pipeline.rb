@@ -51,6 +51,7 @@ module Sinatra
 
         Sprockets::Helpers.configure do |config|
           config.protocol = app.assets_protocol
+          config.prefix = "/assets"
           config.asset_host = app.assets_host if app.respond_to? :assets_host
         end
       end
@@ -62,6 +63,7 @@ module Sinatra
         
         Sprockets::Helpers.configure do |config|
           config.debug       = true
+          config.prefix = "/assets"
           puts "config.debug = #{config.debug}"
         end
 
